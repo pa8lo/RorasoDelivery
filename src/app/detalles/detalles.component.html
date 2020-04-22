@@ -1,0 +1,59 @@
+<ion-content
+  [scrollEvents]="true"
+>
+  <ion-list>
+    <ion-item>
+      <ion-label>Nombre : </ion-label>
+      {{detallePedido.Clients.Name}}
+    </ion-item>
+    <ion-item>
+        <ion-label>Apellido : </ion-label>
+        {{detallePedido.Clients.LastName}}
+    </ion-item>
+    <ion-item >
+        <ion-label >Tel :</ion-label>
+        {{detallePedido.Clients.Phone}}
+    </ion-item>
+    <ion-item >
+        <ion-label >Dirección :</ion-label>
+        {{detallePedido.Adress.Adress}} {{detallePedido.Adress.Department}} {{detallePedido.Adress.Floor}} 
+    </ion-item>
+    <ion-item >
+        <ion-label >Estado :</ion-label>
+        {{detallePedido.State.Description}}
+    </ion-item>
+    <div *ngIf="detallePedido.CombosPorPedido.length > 0">
+      <ion-title color="primary">Combos :</ion-title>
+        <ion-card *ngFor="let ComboPorPedido of detallePedido.CombosPorPedido">
+          <ion-grid fixed>
+            <ion-row>
+              <ion-col size="5"><ion-label >Nombre :  </ion-label></ion-col>
+              <ion-col size="5"><ion-label >{{ComboPorPedido.Offer.Name}} </ion-label></ion-col>
+              <ion-col size="2">$ {{ComboPorPedido.Offer.Amount * ComboPorPedido.Count}}</ion-col>
+              <ion-col size="12"><ion-label >{{ComboPorPedido.Offer.Description}} </ion-label></ion-col>
+              <ion-col size="6"><ion-label >Cantidad :  </ion-label></ion-col>
+              <ion-col size="6"><ion-label >{{ComboPorPedido.Count}} </ion-label></ion-col>
+            </ion-row>
+          </ion-grid>
+        </ion-card>  
+    </div>
+    <div *ngIf="detallePedido.ProductosPorPedido.length > 0">
+        <ion-title class="ion-align-items-center" color="primary">Productos</ion-title>
+        <ion-card *ngFor="let ProductoPorPedido of detallePedido.ProductosPorPedido">
+            <ion-grid fixed>
+              <ion-row>
+                <ion-col size="5"><ion-label >Nombre :  </ion-label></ion-col>
+                <ion-col size="5"><ion-label >{{ProductoPorPedido.Product.Name}} </ion-label></ion-col>
+                <ion-col size="2">$ {{ProductoPorPedido.Product.Amount * ProductoPorPedido.Count}}</ion-col>
+                <ion-col size="12"><ion-label >{{ProductoPorPedido.Product.Description}} </ion-label></ion-col>
+                <ion-col size="6"><ion-label >Cantidad :  </ion-label></ion-col>
+                <ion-col size="6"><ion-label >{{ProductoPorPedido.Count}} </ion-label></ion-col>            </ion-row>
+            </ion-grid>
+          </ion-card>  
+      </div>
+    <ion-item color="success">
+        <ion-label >$</ion-label>
+        {{detallePedido.Amount}}
+    </ion-item>
+  </ion-list>
+</ion-content>

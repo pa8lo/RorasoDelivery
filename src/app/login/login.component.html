@@ -1,0 +1,20 @@
+
+<!-- <ion-grid >
+    <ion-row align-items-center > -->
+      <img src="../../assets/Backgrounds/login.PNG" alt="">
+      
+      <form [formGroup]="todo" (ngSubmit)="login()" style="margin-top: -37px;">
+            <ion-title style="    text-align: center;
+            font-size: 3vh;">Dni : </ion-title>
+            <ion-input style="
+            font-size: 3vh;
+            text-align: center;" expand="full" type="text" formControlName="Dni" placeholder="Ingrese Dni Aqui" autocomplete=off ></ion-input>
+            <ion-title style="    text-align: center;
+            font-size: 3vh;">Password : </ion-title>
+            <ion-input style="
+            font-size: 3vh;
+            text-align: center;"  type="password" formControlName="Password" placeholder="************" autocomplete=off></ion-input>
+      </form>
+  <!-- </ion-row>
+</ion-grid> -->
+<ion-button style="height: 4rem;" type="submit" color="primary" expand="block" [disabled]="!todo.valid" (click)="login()">Ingresar</ion-button>

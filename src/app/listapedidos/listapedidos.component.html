@@ -1,0 +1,42 @@
+<ion-content [fullscreen]="true">
+  <ion-toolbar  [ngStyle]="{background: 'url(/assets/Backgrounds/'+background+')'}">
+    <ion-title size="large" style="color: white;font-weight: bold;text-align: center;">
+      {{estado}}
+    </ion-title>
+  </ion-toolbar>
+    <ion-list  *ngFor="let pedido of pedidos">  
+      <ion-card style="margin: 0px;" (click)="abrirdetalles(pedido)">
+        <ion-grid fixed style="padding: 12px;text-align: center;font-weight: bold;">
+              <ion-row>
+                <ion-col size="12" color="dark">
+                  <ion-item color="light" style="border-radius:12px">
+                    <ion-col size="6" color="primary">
+                        <ion-label>FECHA : </ion-label>
+                    </ion-col>
+                    <ion-col size="6" color="primary">
+                        <ion-label>{{formatDate(pedido.Date) }}</ion-label>
+                    </ion-col>
+                  </ion-item>
+                </ion-col>
+                <ion-col size="6">
+                  <ion-item color="success" style="border-radius:12px;">
+                      <ion-label style="text-align:center" >$ {{pedido.Amount}}</ion-label>
+                  </ion-item>
+                </ion-col>
+                <ion-col size="6">
+                    <ion-item color={{color}} style="border-radius:12px;">
+                        <ion-label style="text-align:center"  color="light">{{pedido.State.Description}}</ion-label>
+                    </ion-item>
+                </ion-col>
+                <ion-col size="4">
+                </ion-col>
+                <ion-col size="4">
+                    <ion-icon style="width: 2rem;height: 2rem;" name="search"></ion-icon>
+                </ion-col>
+                <ion-col size="4">
+                </ion-col>
+              </ion-row>
+            </ion-grid>
+       </ion-card>
+    </ion-list>
+</ion-content>

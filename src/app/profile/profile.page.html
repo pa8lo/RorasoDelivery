@@ -1,0 +1,54 @@
+<ion-header>
+  <ion-toolbar>
+      <ion-buttons slot="start">
+          <ion-menu-button></ion-menu-button>
+        </ion-buttons>
+      <ion-title>Mi perfil</ion-title>
+      <ion-buttons slot="end">
+          <ion-back-button defaultHref="/home"></ion-back-button>
+      </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+    <ion-card>
+        <img src="/assets/Delivery/image.jpg" alt="">
+        <ion-card-header>
+          <ion-card-subtitle *ngIf="pedidosService.token">{{pedidosService.token.user.Name}}</ion-card-subtitle>
+          <ion-card-title *ngIf="pedidosService.token">{{pedidosService.token.user.LastName}}</ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+        </ion-card-content>
+        </ion-card>
+        <ion-card>
+          <ion-card-content>
+              <ion-item (click)="Entregados()">
+                  <ion-label >Entregados</ion-label>
+                  <ion-badge color="success" slot="start" >{{pedidosService.entregados.length}}</ion-badge>
+                  <ion-icon  slot="end" style="    width: 2rem;height: 2rem;" name="ios-arrow-dropdown"></ion-icon>
+              </ion-item>
+              <ion-item (click)="Rechazados()" >
+                <ion-label >Rechazados</ion-label>
+                <ion-badge color="danger" slot="start" >{{pedidosService.rechazados.length}}</ion-badge>
+                <ion-icon slot="end" style="    width: 2rem;height: 2rem;" name="ios-arrow-dropdown"></ion-icon>
+            </ion-item>
+            <ion-item (click)="EnCurso()" >
+              <ion-label >Asignados</ion-label>
+              <ion-badge color="warning" slot="start">{{pedidosService.recibidos.length}}</ion-badge>
+              <ion-icon slot="end" style="    width: 2rem;height: 2rem;" name="ios-arrow-dropdown"></ion-icon>
+          </ion-item>
+          <ion-item (click)="Enviado()" >
+              <ion-label >En Curso</ion-label>
+              <ion-badge color="primary" slot="start">{{pedidosService.enviados.length}}</ion-badge>
+              <ion-icon slot="end" style="    width: 2rem;height: 2rem;" name="ios-arrow-dropdown"></ion-icon>
+          </ion-item>
+          </ion-card-content>
+        </ion-card>
+        <ion-card>
+              <ion-card-header *ngIf="pedidosService.asistencias[0]">
+                  <ion-card-subtitle>Ultimo turno</ion-card-subtitle>
+                  <ion-card-title>{{parseDate(pedidosService.asistencias[0].InTime)}} <ion-label> {{formatTime(pedidosService.asistencias[0].InTime)}} horas</ion-label></ion-card-title>
+              </ion-card-header>
+        </ion-card>
+
+</ion-content>

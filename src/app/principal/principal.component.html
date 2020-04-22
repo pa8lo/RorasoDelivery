@@ -1,0 +1,74 @@
+ <!-- <div #map id="map" style="width: 100%; height: 100%"></div> -->
+ <app-map #map id="map" *ngIf="pedidoService.pedidos && pedidoService.pedidos.length > 0 && pedidoService.gps "  ></app-map>
+ <app-no-gps *ngIf="!pedidoService.gps"></app-no-gps>
+ <!-- <ion-img src="https://image.maps.api.here.com/mia/1.6/mapview?app_id=8F1ekHrYnO9KrpdHrJRS&amp;app_code=b2XcYw0WhXrsjjK4m4SAJg"></ion-img> -->
+ <ion-grid fixed *ngIf="pedidos ">
+   <ion-row>
+     <ion-col size="12">
+       <ion-card (click)="mostrarDetalles(0)" class="detalles" *ngIf="pedidos && pedidos.length > 0">
+               <ion-item >
+                   <ion-label><h1>Detalles Pedido</h1></ion-label>
+                   <ion-badge color="success" slot="end">$ {{pedidos[0].Amount | number}}</ion-badge>
+                 </ion-item>
+               <ion-item-group>
+                 <ion-item-divider>
+                   <ion-label>Dirección</ion-label>
+                 </ion-item-divider>
+               
+                 <ion-item>
+                   <ion-label>{{pedidos[0].Adress.Adress}}</ion-label>
+                   <ion-label slot="end">{{pedidos[0].Adress.Floor}} {{pedidos[0].Adress.Department}}</ion-label>
+                 </ion-item>
+
+
+                 <ion-item-divider>
+                     <ion-label>Cliente</ion-label>
+                 </ion-item-divider>  
+                 <ion-item>
+                   <ion-label>{{pedidos[0].Clients.Name}}</ion-label>
+                 </ion-item>
+                 <ion-item>
+                 <ion-label>{{pedidos[0].Clients.LastName}}</ion-label>
+                 </ion-item>
+
+               </ion-item-group>
+       </ion-card>
+       
+     </ion-col>
+   </ion-row>
+   <ion-grid fixed *ngIf="pedidos && pedidos.length > 0">
+     <ion-row>
+       <ion-col size="12">
+         <ion-button  size="large" expand="full" color="primary" (click)="pedidoEntregado()">
+             Entregado 
+         </ion-button>
+       </ion-col>
+       <ion-col size="12" >
+         <ion-button  size="large" expand="full" color="danger" (click)="pedidoRechazado()">
+             Rechazado
+         </ion-button>
+       </ion-col>
+     </ion-row>
+   </ion-grid>
+   <ion-grid fixed>
+
+       <ion-card (click)="mostrarDetalles(1)" class="detalles" *ngIf="pedidos && pedidos.length > 1">
+           <ion-item >
+               <ion-label><h1>Proximo Pedido</h1></ion-label>
+               <ion-badge color="success" slot="end">$ {{pedidos[1].Amount | number}}</ion-badge>
+             </ion-item>
+           <ion-item-group>
+             <ion-item-divider>
+               <ion-label>Dirección</ion-label>
+             </ion-item-divider>
+           
+             <ion-item>
+               <ion-label>{{pedidos[1].Adress.Adress}}</ion-label>
+               <ion-label slot="end">{{pedidos[1].Adress.Floor}} {{pedidos[1].Adress.Department}}</ion-label>
+             </ion-item>
+
+           </ion-item-group>
+   </ion-card>
+   </ion-grid>
+ </ion-grid>
+ <div *ngIf="!pedidos || pedidos.length == 0"> <app-sin-pedidos></app-sin-pedidos></div>

@@ -1,5 +1,7 @@
 {
-  "name": "rorasoapp",
-  "integrations": {},
+  "name": "Rorasoapp",
+  "integrations": {
+    "cordova": {}
+  },
   "type": "angular"
 }

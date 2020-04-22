@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
-
+import { Storage } from '@ionic/storage';
 import { Platform } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -12,13 +13,13 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 export class AppComponent {
   public appPages = [
     {
-      title: 'Home',
+      title: 'Inicio',
       url: '/home',
       icon: 'home'
     },
     {
-      title: 'List',
-      url: '/list',
+      title: 'Mis Datos',
+      url: '/profile',
       icon: 'list'
     }
   ];
@@ -26,7 +27,9 @@ export class AppComponent {
   constructor(
     private platform: Platform,
     private splashScreen: SplashScreen,
-    private statusBar: StatusBar
+    private statusBar: StatusBar,
+    private storage: Storage,
+    private router : Router
   ) {
     this.initializeApp();
   }
@@ -37,4 +40,8 @@ export class AppComponent {
       this.splashScreen.hide();
     });
   }
+  closeSession(){
+    this.storage.remove('token');
+    window.location.reload()
+    }
 }

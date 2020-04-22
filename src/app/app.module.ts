@@ -8,20 +8,40 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
+import { HttpClientModule } from '@angular/common/http';
+import { IonicStorageModule } from '@ionic/storage';
+import { LoginComponent } from './login/login.component';
+import { FormsModule }   from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
+import { DetallePedidoPage } from './detalle-pedido/detalle-pedido.page';
+import { DetallesPedidoComponent } from './detalles-pedido/detalles-pedido.component';
+import { Geolocation } from '@ionic-native/geolocation/ngx';
+import { HomePageModule } from './home/home.module';
+
+
 
 @NgModule({
-  declarations: [AppComponent],
-  entryComponents: [],
+  declarations: [
+    AppComponent,
+    ],
   imports: [
     BrowserModule,
     IonicModule.forRoot(),
-    AppRoutingModule
+    IonicStorageModule.forRoot(),
+    HomePageModule,
+    AppRoutingModule,
+    HttpClientModule,
+
+    
   ],
   providers: [
     StatusBar,
     SplashScreen,
+    Geolocation ,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents:[]
+
 })
 export class AppModule {}
