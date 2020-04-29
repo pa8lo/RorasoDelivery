@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { PopoverController } from '@ionic/angular';
 import { ListaProductosComponent } from '../lista-productos/lista-productos.component';
-
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-detalles-pedido',
@@ -25,6 +25,10 @@ export class DetallesPedidoComponent implements OnInit {
       translucent: true
     });
     return await popover.present();
+  }
+  formatDate(date:string){
+    console.log(date)
+    return moment(date).add(3, 'h').format('HH:mm:ss');
   }
 
 }

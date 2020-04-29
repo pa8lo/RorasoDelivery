@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild, Input, ElementRef } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Storage } from '@ionic/storage';
-import { ModalController, LoadingController } from '@ionic/angular';
+import { ModalController, LoadingController, ToastController } from '@ionic/angular';
 import { DetallesPedidoComponent } from '../detalles-pedido/detalles-pedido.component';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
 import Axios from 'axios';
@@ -19,6 +19,7 @@ export class PrincipalComponent implements OnInit {
     private storage: Storage,
     public modalController: ModalController,
     private geolocation: Geolocation,
+    public toastController: ToastController,
     public loginService:LoginService,
     public loadingController: LoadingController,
     public pedidoService:PedidoService
@@ -32,16 +33,27 @@ export class PrincipalComponent implements OnInit {
       this.storage.get('token')
         .then( (data) => this.token =  data)
         .then( ()=> {
-          this.axios
-          .get('https://rorasobackend.herokuapp.com/Pedido/Delivery',
-          {headers:{'access-token' : this.token.token}}
-          ).then( (data)=>{
-            console.log("informaci")
-            this.pedidos = data.data
-            console.log(this.pedidos)
+          this.axios.get('https://rorasobackend.herokuapp.com/User/CurrentUser',
+          {headers:{'access-token' : this.token.token}})
+          .then(() => {
+            this.axios
+            .get('https://rorasobackend.herokuapp.com/Pedido/Delivery',
+            {headers:{'access-token' : this.token.token}}
+            ).then( (data)=>{
+              this.pedidos = data.data
+              this.loadingController.dismiss()
+              console.log(this.pedidos)
+            })
+            .catch((err) =>{
+              this.errorToast("Su sesión expiro")
+              this.storage.remove('token');
+              return false
+            })
           })
           .catch((err) =>{
+            this.errorToast("Su sesión expiro")
             this.storage.remove('token');
+            this.loginService.abrirLogin();
             return false
           })
         })
@@ -136,6 +148,13 @@ export class PrincipalComponent implements OnInit {
     }
     onClick(){
      this.map.removeObjects(this.map.getObjects())
+    }
+    async errorToast(message:string) {
+      const toast = await this.toastController.create({
+        message: message,
+        duration: 2000
+      });
+      toast.present();
     }
     
 

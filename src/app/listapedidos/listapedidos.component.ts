@@ -24,7 +24,7 @@ export class ListapedidosComponent implements OnInit {
     console.log(this.estado)
   }
   formatDate(date:string){
-    return moment(date).format('YYYY-MM-DD HH:mm:ss');
+    return moment(date).add(3, 'h').format('YYYY-MM-DD HH:mm:ss');
   }
 
   async abrirdetalles(pedido:any){

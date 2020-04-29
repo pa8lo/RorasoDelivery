@@ -64,7 +64,7 @@ export class ProfilePage implements OnInit {
     return await modal.present();
   }
   parseDate(date){
-    return moment(date).format('YYYY-MM-DD HH:mm');
+    return moment(date).add(3, 'h').format('YYYY-MM-DD HH:mm');
   }
   formatTime(date){
     console.log(date)

@@ -1,7 +1,8 @@
 import { Injectable, ViewChild, ElementRef } from '@angular/core';
 import { LoginService } from './login.service';
 import Axios from 'axios';
-import { LoadingController, ToastController } from '@ionic/angular';
+import { Storage } from '@ionic/storage';
+import { LoadingController, ToastController, AlertController } from '@ionic/angular';
 import { loadingController } from '@ionic/core';
 import { Alert } from 'selenium-webdriver';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
@@ -34,7 +35,8 @@ export class PedidoService {
   public rechazados: any = [];
   public asistencias: any = [];
   public enviados: any = [];
-  constructor(private geolocation: Geolocation ,public loadingController: LoadingController,public toastController: ToastController,) { 
+  constructor(    private storage: Storage,public alertController: AlertController,
+    private geolocation: Geolocation ,public loadingController: LoadingController,public toastController: ToastController,) { 
     
 
   }
@@ -505,6 +507,9 @@ export class PedidoService {
         console.log("Cargando Reportes")
         console.log(token)
         this.initLoading("Cargando reporte");
+        this.axios.get('https://rorasobackend.herokuapp.com/User/CurrentUser',
+        {headers:{'access-token' : this.token.token}})
+        .then( async () => {
           await this.axios
           .get('https://rorasobackend.herokuapp.com/Pedido/DeliveryAll',
           {headers:{'access-token' : token.token}}
@@ -530,6 +535,14 @@ export class PedidoService {
           .catch((err) =>{
             loadingController.dismiss()
           })
+        }).catch( () =>{
+          loadingController.dismiss()
+          alert("Su sesión expiro")
+          this.storage.remove('token');
+          window.location.replace('/');
+          return false
+        })
+
         }
     setBadge(data : any){
       console.log("cargando valores")
@@ -552,5 +565,21 @@ export class PedidoService {
         duration: 2000
       });
       toast.present();
+    }
+    async presentAlertConfirm() {
+      const alert = await this.alertController.create({
+        header: 'UPS!',
+        message: ' <strong>sesión expirada</strong>!!!',
+        backdropDismiss: false,
+        buttons: [
+           {
+            text: 'Iniciar sesión',
+            handler: () => {
+              window.location.reload();
+            }
+          }
+        ]
+      });
+      alert.present()
     }
 }

@@ -68,18 +68,29 @@ export class LoginComponent implements OnInit {
       this.abrirLogin()
     }else{
       console.log("con token"+this.token)
-      this.axios
-      .get('https://rorasobackend.herokuapp.com/Pedido/Delivery',
-      {headers:{'access-token' : this.token.token}}
-      ).then( (data)=>{
-        this.pedidos = data.data
-        this.loadingController.dismiss()
-        console.log(this.pedidos)
+      this.axios.get('https:///User/CurrentUser',
+      {headers:{'access-token' : this.token.token}})
+      .then(() => {
+        this.axios
+        .get('https://rorasobackend.herokuapp.com/Pedido/Delivery',
+        {headers:{'access-token' : this.token.token}}
+        ).then( (data)=>{
+          this.pedidos = data.data
+          this.loadingController.dismiss()
+          console.log(this.pedidos)
+        })
+        .catch((err) =>{
+          this.errorToast("Su sesión expiro")
+          this.storage.remove('token');
+          return false
+        })
       })
       .catch((err) =>{
+        this.errorToast("Su sesión expiro")
         this.storage.remove('token');
         return false
       })
+      
     }
   }
   login(Password:string,Dni:string){
@@ -99,7 +110,9 @@ export class LoginComponent implements OnInit {
         error => {
           this.errorToast("Credenciales Invalidas")
           this.storage.remove('token');
+          this.loadingController.dismiss().then(() => {
           return false
+          })
       })
   }
   async errorToast(message:string) {
